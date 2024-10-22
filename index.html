@@ -16,14 +16,40 @@
     <table class="table">
       <thead class="thead-dark">
         <th scope="col">Id</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Precio</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Action</th>
       </thead>
       <tbody></tbody>
     </table>
     <h2>Add Product</h2>
-    <input />
-    <button class="btn btn-dark">Add Product</button>
+    <form>
+      <div class="form-group">
+        <label for="productName">Name of Product</label>
+        <div class="col-md-6">
+          <input
+            type="text"
+            class="form-control"
+            id="productName"
+            placeholder="Name"
+          />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="productPrice">Price of Product</label>
+        <div class="col-md-6">
+          <input
+            type="number"
+            class="form-control"
+            id="productPrice"
+            placeholder="Price"
+          />
+        </div>
+      </div>
+      <button id="addBoton" type="submit" class="btn btn-dark">
+        Add Product
+      </button>
+    </form>
     <script src="./js/app.js"></script>
   </body>
 </html>
