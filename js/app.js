@@ -1,6 +1,8 @@
 let api = "http://localhost:8080/api/v1/product";
 let addProduct = "http://localhost:8080/api/v1/product/insert";
 
+let tbody = document.querySelector("tbody");
+
 function getAllProduct() {
   fetch(api)
     .then((response) => {
@@ -35,6 +37,30 @@ function getAllProduct() {
         tr.appendChild(tdPrice);
         tr.appendChild(buttonRemove);
         tbody.appendChild(tr);
+
+        if (buttonRemove) {
+          buttonRemove.addEventListener("click", () => {
+            let idProduct = buttonRemove.id;
+            let deleteProduct = `http://localhost:8080/api/v1/product/delete/${idProduct}`;
+
+            fetch(deleteProduct, {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            })
+              .then(() => {
+                console.log(`Producto ${idProduct} eliminado`);
+                tbody.innerHTML = "";
+                getAllProduct();
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          });
+        } else {
+          console.log("Error al obtener id del producto");
+        }
       }
     })
     .catch((error) => {
@@ -62,20 +88,15 @@ buttonAdd.addEventListener("click", () => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(product),
-  }).catch((error) => {
-    console.log(error);
-  });
+  })
+    .then(() => {
+      console.log(`Producto ${product} añadido`);
+      tbody.innerHTML = "";
+      getAllProduct();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 });
-
-let botonDelete = document.querySelector(".btn.btn-danger.boton-borrar");
-
-if (botonDelete) {
-  botonDelete.addEventListener("click", () => {
-    let idProduct = botonDelete.id;
-    let deleteProduct = `http://localhost:8080/api/v1/product/delete/${idProduct}`;
-
-    fetch(deleteProduct);
-  });
-}
 
 getAllProduct();
